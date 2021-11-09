@@ -34,10 +34,10 @@
                     <!-- <i class="bi bi-heart-fill"></i>
                     <a class="card-link btn btn-info" href="#">Like</a> -->
 
-                    <button type="button" class="btn btn-success"><a href="<%= campground._id  %> "
+                    <button type="button" class="btn btn-success"><a href="<%= campground._id %> "
                             style="text-decoration: none; color: white">View Post</a></button>
                     <% if( currentUser && campground.owner.equals(currentUser._id)) {%>
-                        <button type="button" class="btn btn-warning"><a href="<%= campground._id  %>/edit "
+                        <button type="button" class="btn btn-warning"><a href="<%= campground._id %>/edit "
                                 style="text-decoration: none; color: white">Edit Post</a></button>
                         <form action="<%= campground._id%>?_method=DELETE" method="POST" class="d-inline">
                             <button class=" btn btn-danger">Delete</button>
