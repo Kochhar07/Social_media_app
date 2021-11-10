@@ -24,8 +24,9 @@ const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/social_app';
 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
+    useCreateIndex: true,
     useUnifiedTopology: true,
-
+    useFindAndModify: false
 });
 
 const db = mongoose.connection;
@@ -59,6 +60,7 @@ store.on("error", function (e) {
 const sessionConfig = {
     store,
     secret,
+    name: 'session',
     resave: false,
     saveUninitialized: true,
     store: new MongoStore({ mongooseConnection: mongoose.connection })
