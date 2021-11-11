@@ -12,14 +12,15 @@ const methodOverride = require('method-override');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
-const Campground = require('./models/campground')
-const MongoStore = require("connect-mongo")(session);
+const Campground = require('./models/campground');
+const MongoDBStore = require('connect-mongo')(session);
 
 const userRoutes = require('./routes/users');
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
 const { isLoggedIn } = require('./middleware');
-const dbUrl = process.env.DBURL || 'mongodb://localhost:27017/social_app';
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/social_app';
+
 // const dbUrl = process.env.DBURL;
 
 mongoose.connect(dbUrl, {
@@ -46,7 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 const secret = process.env.SECRET || 'thisshouldbeabettersecret!';
 
-const store = new MongoStore({
+const store = new MongoDBStore({
     url: dbUrl,
     secret,
     touchAfter: 24 * 60 * 60
@@ -55,13 +56,16 @@ const store = new MongoStore({
 store.on("error", function (e) {
     console.log("session store error", e)
 })
+
+
+
+
 const sessionConfig = {
     store,
     secret,
     name: 'session',
     resave: false,
     saveUninitialized: true,
-    store: new MongoStore({ mongooseConnection: mongoose.connection })
 
 }
 
